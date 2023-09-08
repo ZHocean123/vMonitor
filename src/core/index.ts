@@ -1,13 +1,11 @@
-
-
 import Monitor from './report'
-import { DefaultConfigOptons, RequestOptions, MonitorConfig } from '../types/core'
+import {DefaultConfigOptions, MonitorConfig, RequestOptions} from '../types/core'
 
 
 export {
-  DefaultConfigOptons,
-  RequestOptions,
-  MonitorConfig
+    DefaultConfigOptions,
+    RequestOptions,
+    MonitorConfig
 
 }
 export default Monitor

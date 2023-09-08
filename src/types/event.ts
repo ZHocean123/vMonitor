@@ -1,12 +1,12 @@
 export type MouseEvent =
-  | 'click'
-  | 'dblclick'
-  | 'contextmenu'
-  | 'mousedown'
-  | 'mouseup'
-  | 'mouseenter'
-  | 'mouseout'
-  | 'mouseover'
+    | 'click'
+    | 'dblclick'
+    | 'contextmenu'
+    | 'mousedown'
+    | 'mouseup'
+    | 'mouseenter'
+    | 'mouseout'
+    | 'mouseover'
 
 export type pageEvent = 'page' | 'hashchange' | 'popstate' | 'pushState' | 'replaceState'
 
