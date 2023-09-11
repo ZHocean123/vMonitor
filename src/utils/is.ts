@@ -79,3 +79,11 @@ export const isServerRendering = (() => {
     return true
   }
 })()
+
+export const isPerformance = (): boolean => {
+  return (
+      !!window.performance &&
+      !!window.performance.getEntriesByType &&
+      !!window.performance.mark
+  )
+}

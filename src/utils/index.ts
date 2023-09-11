@@ -5,8 +5,14 @@ type Obj = Record<string, any>
 export const delEmptyQueryNodes = (obj: Obj) => {
     Object.keys(obj).forEach((key: keyof Obj) => {
         const value = obj[key]
-        value && typeof value === 'object' && delEmptyQueryNodes(value)
-        ;(value === '' ||
+        // 如果是object，再下一层处理
+        value && typeof value === 'object' && delEmptyQueryNodes(value);
+
+        // 如果是数字
+        if(typeof value === 'number') return;
+
+        // 如果值是null，空字符串，空数组：删除字段
+        (value === '' ||
             value === null ||
             value === undefined ||
             value.length === 0 ||

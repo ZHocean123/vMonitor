@@ -35,3 +35,12 @@ export const pageEventList: Array<string> = [
     'replaceState',
     'performance'
 ]
+
+// 页面加载完成
+export const onLoaded = (callback: () => void): void => {
+    if (document.readyState === 'complete') {
+        setTimeout(callback)
+    } else {
+        addEventListener('pageshow', callback)
+    }
+}

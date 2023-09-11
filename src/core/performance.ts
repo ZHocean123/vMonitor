@@ -1,46 +1,76 @@
 import Monitor from './index'
+import {isPerformance} from "../utils/is";
+import {onLoaded} from "../utils/event";
+
 
 export function performanceMonitor(this: Monitor) {
-    document.addEventListener('DOMContentLoaded', () => {
-        if (!performance) {
-            // 当前浏览器不支持
-            console.log('你的浏览器不支持 performance 接口')
-            return
-        }
+    if (!isPerformance()) {
+        // 当前浏览器不支持
+        console.log('你的浏览器不支持performance')
+        return
+    }
 
-        const timing = performance.timing
-        console.log('PerformanceNavigationTiming~~~', window.PerformanceNavigationTiming)
+    const ob: PerformanceObserver = new PerformanceObserver((item) =>
+        item.getEntries().map((entry) => {
+            const {
+                domainLookupStart,
+                domainLookupEnd,
+                connectStart,
+                connectEnd,
+                // secureConnectionStart,
+                // requestStart,
+                responseStart,
+                // responseEnd,
+                // domInteractive,
+                // domContentLoadedEventStart,
+                domContentLoadedEventEnd,
+                // loadEventStart,
+                fetchStart,
+            } = entry as PerformanceNavigationTiming
 
-        const start = timing.navigationStart
-        let dnsTime = 0,
-            tcpTime = 0,
-            firstPaintTime = 0,
-            domRenderTime = 0
-
-        dnsTime = timing.domainLookupEnd - timing.domainLookupStart
-        tcpTime = timing.connectEnd - timing.connectStart
-        console.log('dnsTime~~ ', dnsTime)
-        console.log('tcpTime~~ ', tcpTime)
-
-        firstPaintTime = timing.responseStart - start
-        domRenderTime = timing.domContentLoadedEventEnd - start
-
-        // dom渲染
-        this.push({
-            type: 'performance',
-            config: {
-                performance_time: domRenderTime,
-                performance_type: 'page_dom_ready_time'
+            // 未加载完毕时不提交性能信息
+            if (domContentLoadedEventEnd === 0) {
+                return
             }
+
+            if (ob) {
+                ob.disconnect()
+            }
+
+            const dnsTime = (domainLookupEnd - domainLookupStart).toFixed(2);
+            const tcpTime = (connectEnd - connectStart).toFixed(2);
+            console.log('dnsTime~~ ', dnsTime)
+            console.log('tcpTime~~ ', tcpTime)
+
+            const firstPaintTime = (responseStart - fetchStart).toFixed(2);
+            const domRenderTime = (domContentLoadedEventEnd - fetchStart).toFixed(2)
+            console.log('firstPaintTime~~ ', firstPaintTime)
+            console.log('domRenderTime~~ ', domRenderTime, domContentLoadedEventEnd, fetchStart, domContentLoadedEventEnd - fetchStart)
+
+            // dom渲染
+            this.push({
+                type: 'performance',
+                config: {
+                    performance_time: domRenderTime,
+                    performance_type: 'page_dom_ready_time'
+                }
+            })
+
+            // 首屏时间
+            this.push({
+                type: 'performance',
+                config: {
+                    performance_type: 'page_first_paint_time',
+                    performance_time: firstPaintTime
+                }
+            })
         })
+    )
 
-        // 首屏时间
-        this.push({
-            type: 'performance',
-            config: {
-                performance_type: 'page_first_paint_time',
-                performance_time: firstPaintTime
-            }
+    onLoaded(() => {
+        ob.observe({
+            type: 'navigation',
+            buffered: true
         })
     })
 }
