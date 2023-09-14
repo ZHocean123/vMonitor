@@ -1,8 +1,8 @@
 /**
  * @format
  * @url 请求的地址
- * @app_id 应用id
- * @app_name 应用名称
+ * @appId 应用id
+ * @appName 应用名称
  * @token 请求的token
  * @historyTracker history上报
  * @hashTracker hash上报
@@ -17,10 +17,10 @@
 export interface DefaultConfigOptions {
   requestUrl: string
   url?: string
-  app_id?: string | undefined
-  app_name?: string | undefined
+  appId?: string | undefined
+  appName?: string | undefined
   module?: string | undefined
-  module_name?: string | undefined
+  moduleName?: string | undefined
   token?: string
   historyTracker?: boolean
   hashTracker?: boolean
@@ -36,7 +36,7 @@ export interface DefaultConfigOptions {
 
 /**
  * @module
- * @module_name 模块名称
+ * @moduleName 模块名称
  * @ua user-agent
  * @url href 当前 URL 地址
  * @domain 域名
@@ -44,14 +44,14 @@ export interface DefaultConfigOptions {
  * @referrer 上一个访问页面 URL 地址
  * @actions 事件
  * @type 类型  例如 page (pv、uv) ，click（点击事件），input (输入框)，statistics (自定义统计)
- * @path_name 页面name
- * @event_name  '点击名称'
- * @event_value '点击按钮的值｜input的值'
- * @error_message 报错的message
+ * @pathName 页面name
+ * @eventName  '点击名称'
+ * @eventValue '点击按钮的值｜input的值'
+ * @errorMessage 报错的message
  * @config 自定义配置
  */
 export interface RequestOptions
-  extends Pick<DefaultConfigOptions, 'app_id' | 'app_name' | 'token' | 'module' | 'module_name'> {
+  extends Pick<DefaultConfigOptions, 'appId' | 'appName' | 'token' | 'module' | 'moduleName'> {
   ua?: string
   url?: string
   domain?: string
@@ -59,13 +59,13 @@ export interface RequestOptions
   referrer?: string
   actions?: string
   type?: string
-  path_name?: string
+  pathName?: string
   path?: string
-  event_name?: string
+  eventName?: string
   name?: string
-  event_value?: string
+  eventValue?: string
   value?: string
-  error_message?: string
+  errorMessage?: string
   config?: Record<string, any> | undefined
 }
 

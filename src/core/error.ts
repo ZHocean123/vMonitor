@@ -12,7 +12,7 @@ export function errorEvent(this: Monitor) {
                 type: 'error',
                 config: {
                     error_url,
-                    error_message: e.message
+                    errorMessage: e.message
                 }
             })
         },
@@ -26,7 +26,7 @@ export function promiseReject(this: Monitor) {
             this.push({
                 type: 'reject',
                 config: {
-                    error_message: error
+                    errorMessage: error
                 }
             })
         })

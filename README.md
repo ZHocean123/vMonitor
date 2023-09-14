@@ -29,9 +29,9 @@ import Monitor, { DefaultConfigOptons } from 'use-monitor'
 
 const options: DefaultConfigOptons = {
   requestUrl: '//127.0.0.1:8080/report',
-  app_id: 1121212,
-  app_name: 'app_name',
-  module_name: 'module_name1',
+  appId: 1121212,
+  appName: 'appName',
+  moduleName: 'moduleName1',
   historyTracker: true,
   hashTracker: true,
   beaconTracker: false,
@@ -54,11 +54,11 @@ monitor.push({
 ### 设置第二级模块，按模块统计 PV、UV 
 
 ```js
-// 例如页面组件创建前后的生命周期如vue的created 配置module_name
+// 例如页面组件创建前后的生命周期如vue的created 配置moduleName
 // 或者在vue路由的afterEach配置每个路由
 monitor.setConfig({
   module: 'home',
-  module_name: '首页'
+  moduleName: '首页'
 })
 monitor.push({
   type: 'page'
@@ -67,7 +67,7 @@ monitor.push({
 // 脚本配置
 monitor.setConfig({
   module: 'script',
-  module_name: '脚本配置'
+  moduleName: '脚本配置'
 })
 monitor.push({
   type: 'page'
@@ -79,10 +79,10 @@ monitor.push({
 ```js
 var monitor = new Monitor({
   url: '', // 请求地址
-  app_id: 'xxx', //唯一的项目Id
-  app_name: '巨量引擎', //唯一的项目名称
+  appId: 'xxx', //唯一的项目Id
+  appName: '巨量引擎', //唯一的项目名称
   module: 'createCampaign',
-  module_name: '新建计划'
+  moduleName: '新建计划',
   token: 'xxx'
 })
 
@@ -97,9 +97,9 @@ monitor.push({
 ### 自动统计点击
 1、标签属性
 
-- m_p 代表路径(path_name)
-- m_btn 代表点击事件(event_name)
-- m_val 代表事件的值(event_value)
+- m_p 代表路径(pathName)
+- m_btn 代表点击事件(eventName)
+- m_val 代表事件的值(eventValue)
 
 2、基础按钮
 
@@ -152,8 +152,8 @@ monitor.push({
 /**
  * @format
  * @url 请求的地址
- * @app_id 应用id
- * @app_name 应用名称
+ * @appId 应用id
+ * @appName 应用名称
  * @token 请求的token
  * @historyTracker history上报   默认false
  * @hashTracker hash上报    默认false
@@ -168,10 +168,10 @@ monitor.push({
 export interface DefaultConfigOptons {
   requestUrl: string
   url?: string
-  app_id?: string | undefined
-  app_name?: string | undefined
+  appId?: string | undefined
+  appName?: string | undefined
   module?: string | undefined
-  module_name?: string | undefined
+  moduleName?: string | undefined
   token?: string
   historyTracker?: boolean
   hashTracker?: boolean
@@ -191,7 +191,7 @@ export interface DefaultConfigOptons {
 ```typescript
 /**
  * @module
- * @module_name 模块名称
+ * @moduleName 模块名称
  * @ua user-agent
  * @url href 当前 URL 地址
  * @domain 域名
@@ -199,14 +199,14 @@ export interface DefaultConfigOptons {
  * @referrer 上一个访问页面 URL 地址
  * @actions 事件
  * @type 类型  例如 page (pv、uv) ，click（点击事件），input (输入框)，statistics (自定义统计)
- * @path_name 页面name
- * @event_name  '点击名称'
- * @event_value '点击按钮的值｜input的值'
- * @error_message 报错的message
+ * @pathName 页面name
+ * @eventName  '点击名称'
+ * @eventValue '点击按钮的值｜input的值'
+ * @errorMessage 报错的message
  * @config 自定义配置
  */
 export interface RequestOptions
-  extends Pick<DefaultConfigOptons, 'app_id' | 'app_name' | 'token' | 'module' | 'module_name'> {
+  extends Pick<DefaultConfigOptons, 'appId' | 'appName' | 'token' | 'module' | 'moduleName'> {
   ua?: string
   url?: string
   domain?: string
@@ -214,13 +214,13 @@ export interface RequestOptions
   referrer?: string
   actions?: string
   type?: string
-  path_name?: string
+  pathName?: string
   path?: string
-  event_name?: string
+  eventName?: string
   name?: string
-  event_value?: string
+  eventValue?: string
   value?: string
-  error_message?: string
+  errorMessage?: string
   config?: Record<string, any> | undefined
 }
 ```
@@ -236,5 +236,5 @@ export interface RequestOptions
 
 ## 说明
 - 这个埋点sdk参考我公司的埋点业务，简单用typescript跟rollup实现了mini版本
-- 添加了自动history跟hash上报，不过一般在页面组件添加module_name即可
+- 添加了自动history跟hash上报，不过一般在页面组件添加moduleName即可
 - 可以自定义扩展参数

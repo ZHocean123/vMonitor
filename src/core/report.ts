@@ -53,11 +53,11 @@ export default class Monitor {
     public setRequestOptions(options: RequestOptions) {
         this.requestOptions = {
             ...this.requestOptions,
-            app_id: options?.app_id,
-            app_name: options?.app_name,
+            appId: options?.appId,
+            appName: options?.appName,
             token: options?.token,
             module: options?.module,
-            module_name: options?.module_name,
+            moduleName: options?.moduleName,
             ...options?.config // 自定义参数 如 uuid之类的用户鉴权参数
         }
     }
@@ -90,16 +90,16 @@ export default class Monitor {
 
         console.log(`----------${data.type}------------`)
         if (pageEventList.indexOf(data.type!) !== -1) {
-            console.log(data.app_name, ' ', data.module_name)
+            console.log(data.appName, ' ', data.moduleName)
         } else {
             console.log(
-                data.app_name || data.app_name,
+                data.appName || data.appName,
                 ' ',
-                data.module_name || data.module_name,
+                data.moduleName || data.moduleName,
                 ' ',
-                data.path_name,
+                data.pathName,
                 ' ',
-                data.event_name
+                data.eventName
             )
         }
     }
@@ -139,9 +139,9 @@ export default class Monitor {
 
             this.push({
                 type: 'click',
-                path_name: JSON.stringify(monitorPaths),
-                event_name: targetText,
-                event_value: targetValue,
+                pathName: JSON.stringify(monitorPaths),
+                eventName: targetText,
+                eventValue: targetValue,
                 actions: JSON.stringify([
                     {
                         name: targetText
@@ -177,22 +177,22 @@ export default class Monitor {
      * @param {RequestOptions} data
      */
     public push(data: RequestOptions) {
-        if (!data.path_name) {
-            data.path_name = ''
+        if (!data.pathName) {
+            data.pathName = ''
             if (data.path) {
                 if (Array.isArray(data.path)) {
-                    data.path_name = JSON.stringify(data.path)
+                    data.pathName = JSON.stringify(data.path)
                 } else {
-                    data.path_name = data.path
+                    data.pathName = data.path
                 }
             }
         }
 
-        if (!data.event_name && data.actions) {
+        if (!data.eventName && data.actions) {
             const actions = JSON.parse(data.actions)
             if (actions.length) {
-                data.event_name = actions[0].name || ''
-                data.event_value = actions[0].value || ''
+                data.eventName = actions[0].name || ''
+                data.eventValue = actions[0].value || ''
             }
         }
         this.reportTracker(data)
@@ -223,9 +223,7 @@ export default class Monitor {
 
     // navigator.sendBeacon 关闭浏览器还能请求
     private requestByPost<T extends RequestOptions>(requestUrl: string, data: T) {
-        const headers = {
-            type: 'application/x-www-form-urlencoded'
-        }
+        const headers = { type: 'application/json; charset=UTF-8' }
         const blob = new Blob([JSON.stringify(data)], headers)
         navigator.sendBeacon(requestUrl, blob)
     }

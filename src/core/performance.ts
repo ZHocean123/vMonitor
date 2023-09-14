@@ -51,8 +51,8 @@ export function performanceMonitor(this: Monitor) {
             this.push({
                 type: 'performance',
                 config: {
-                    performance_time: domRenderTime,
-                    performance_type: 'page_dom_ready_time'
+                    performanceTime: domRenderTime,
+                    performanceType: 'page_dom_ready_time'
                 }
             })
 
@@ -60,8 +60,8 @@ export function performanceMonitor(this: Monitor) {
             this.push({
                 type: 'performance',
                 config: {
-                    performance_type: 'page_first_paint_time',
-                    performance_time: firstPaintTime
+                    performanceType: 'page_first_paint_time',
+                    performanceTime: firstPaintTime
                 }
             })
         })

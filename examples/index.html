@@ -45,9 +45,9 @@
       const monitor = new Monitor({
         url: '//127.0.0.1:8088/report',
         token: '12121',
-        app_id: 1121212,
-        app_name: 'app_name',
-        module_name: 'module_name1',
+        appId: 1121212,
+        appName: 'appName',
+        moduleName: 'moduleName1',
         historyTracker: true,
         hashTracker: true,
         beaconTracker: false,
@@ -62,7 +62,7 @@
       const js_error_btn = document.querySelector('#js_error_btn')
       push_btn.onclick = () => {
         monitor.setConfig({
-          module_name: 'module_name2'
+          moduleName: 'moduleName2'
         })
 
         monitor.push({
